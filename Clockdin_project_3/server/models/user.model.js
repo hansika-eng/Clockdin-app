@@ -4,6 +4,8 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  googleId: { type: String, index: true, unique: false }, // optional
+   avatar: { type: String },
   createdAt: { type: Date, default: Date.now },
   bookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Event' }],
   myEvents: [{
