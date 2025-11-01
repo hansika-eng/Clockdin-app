@@ -135,13 +135,22 @@ function scheduleEventsEndingSoonCron() {
 }
 
 // Setup logging
+// Setup logging safely
 const logFilePath = path.join(__dirname, 'logs', 'server.log');
+
+// Ensure folder exists
+const logDir = path.dirname(logFilePath);
+if (!fs.existsSync(logDir)) fs.mkdirSync(logDir, { recursive: true });
+
+// Create write stream
 const logStream = fs.createWriteStream(logFilePath, { flags: 'a' });
 
+// Helper function to log messages
 function logMessage(message) {
   const timestamp = new Date().toISOString();
   logStream.write(`[${timestamp}] ${message}\n`);
 }
+
 
 // Middleware to log requests
 app.use((req, res, next) => {
