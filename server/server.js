@@ -12,9 +12,19 @@ const User = require('./models/user.model'); // Import User model
 const { rescheduleAll, scheduleBookmarkedNotifications, scheduleEventNotifications } = require('./utils/scheduler');
 const reminders = require('./routes/reminders');
 
+// ✅ Initialize express app only once
 const app = express();
-app.use(cors());
+
+// ✅ Setup CORS for your deployed frontend
+app.use(cors({
+  origin: "https://clockdin-app.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
+// ✅ Parse JSON
 app.use(express.json());
+
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
