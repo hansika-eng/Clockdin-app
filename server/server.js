@@ -25,6 +25,20 @@ app.use(cors({
 // ✅ Parse JSON
 app.use(express.json());
 
+// ✅ Root route
+app.get('/', (req, res) => {
+  res.send('Clockdin backend is running!');
+});
+
+// Routes
+app.use('/api/users', require('./routes/users'));
+app.use('/api/chatbot', require('./routes/chatbot'));
+app.use('/api/events', require('./routes/events'));
+app.use('/api/reminders', reminders);
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/reminders/bookmark-notifications', require('./routes/reminders'));
+
+
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
