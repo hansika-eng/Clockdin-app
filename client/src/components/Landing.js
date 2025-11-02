@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 const API = '/api/users';
 
 const Landing = ({ onSignIn }) => {
@@ -13,21 +14,20 @@ const Landing = ({ onSignIn }) => {
 
   const handleLogin = async e => {
     e.preventDefault();
-    setLoading(true); setError('');
+    setLoading(true);
+    setError('');
     try {
-      const res = await fetch(`${API}/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(login),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.msg || 'Login failed');
-      localStorage.setItem('clockdin_token', data.token);
-      localStorage.setItem('clockdin_signedin', 'true');
-      localStorage.setItem('clockdin_user', JSON.stringify(data.user));
-      onSignIn();
+      const res = await axios.post('/api/users/login', login);
+      if (res.data.token) {
+        localStorage.setItem('clockdin_token', res.data.token);
+        localStorage.setItem('clockdin_signedin', 'true');
+        localStorage.setItem('clockdin_user', JSON.stringify(res.data.user));
+        onSignIn();
+      } else {
+        setError('Login failed - invalid response');
+      }
     } catch (err) {
-      setError(err.message);
+      setError(err.response?.data?.msg || 'Login failed');
     } finally {
       setLoading(false);
     }
@@ -81,7 +81,7 @@ const Landing = ({ onSignIn }) => {
               Never Miss a <span style={{color:'#2563eb'}}>Student Event</span>
             </h1>
             <div style={{color:'#475569',fontSize:'1.25rem',marginTop:10,textAlign:'center',maxWidth:700}}>
-              Discover hackathons, internships, workshops, and competitions. Bookmark your favorites, set reminders, and build your career with Clockdin.
+              Discover hackathons, internships, workshops, and competitions
             </div>
           </div>
           {/* Feature Cards */}

@@ -17,7 +17,17 @@ import TermsOfService from './components/TermsOfService';
 import axios from 'axios';
 
 function App() {
-  axios.defaults.baseURL = 'https://clockdin-backend.onrender.com';
+  axios.defaults.baseURL = process.env.NODE_ENV === 'development' 
+    ? 'http://localhost:5000'
+    : 'https://clockdin-backend.onrender.com';
+
+  axios.interceptors.request.use(config => {
+    const token = localStorage.getItem('clockdin_token');
+    if (token) {
+      config.headers['x-auth-token'] = token;
+    }
+    return config;
+  });
 
   const [signedIn, setSignedIn] = useState(() => {
     return localStorage.getItem('clockdin_signedin') === 'true';

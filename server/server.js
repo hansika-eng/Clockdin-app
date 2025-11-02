@@ -16,9 +16,9 @@ const reminders = require('./routes/reminders');
 const app = express();
 
 // ✅ Setup CORS for your deployed frontend
-// Update CORS to match your Render domains
+// Update CORS config in server.js
 app.use(cors({
-  origin: "https://clockdin-frontend.onrender.com",
+  origin: ["http://localhost:3000", "https://clockdin-frontend.onrender.com"],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
