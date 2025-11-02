@@ -30,6 +30,7 @@ app.get('/', (req, res) => {
   res.send('Clockdin backend is running!');
 });
 
+// Add health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).send('OK');
 });

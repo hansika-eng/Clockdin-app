@@ -8,14 +8,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: REACT_APP_API_URL
-        fromService:
-          name: clockdin-backend
-          type: web
-          property: url
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
+        value: https://clockdin-backend.onrender.com
 
   - type: web
     name: clockdin-backend
@@ -27,7 +20,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: MONGO_URI
-        sync: false # Set this in Render dashboard
+        sync: false
       - key: JWT_SECRET
         sync: false
       - key: EMAIL_USER
@@ -41,17 +34,7 @@ services:
       - key: GOOGLE_CLIENT_SECRET
         sync: false
       - key: CLIENT_URL
-        fromService:
-          name: clockdin-frontend
-          type: web
-          property: url
+        value: https://clockdin-frontend.onrender.com
       - key: SERVER_URL
-        fromService:
-          name: clockdin-backend
-          type: web
-          property: url
+        value: https://clockdin-backend.onrender.com
     healthCheckPath: /health
-    disk:
-      name: clockdin-data
-      mountPath: /data
-      sizeGB: 1
