@@ -16,12 +16,12 @@ const reminders = require('./routes/reminders');
 const app = express();
 
 // ✅ Setup CORS for your deployed frontend
+// Update CORS to match your Render domains
 app.use(cors({
-  origin: "https://clockdin-app.vercel.app",
+  origin: "https://clockdin-frontend.onrender.com",
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
-
 // ✅ Parse JSON
 app.use(express.json());
 

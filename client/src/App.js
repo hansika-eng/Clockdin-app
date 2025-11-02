@@ -14,8 +14,11 @@ import HelpCenter from './components/HelpCenter';
 import ContactUs from './components/ContactUs';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfService from './components/TermsOfService';
+import axios from 'axios';
 
 function App() {
+  axios.defaults.baseURL = 'https://clockdin-backend.onrender.com';
+
   const [signedIn, setSignedIn] = useState(() => {
     return localStorage.getItem('clockdin_signedin') === 'true';
   });
@@ -35,7 +38,7 @@ function App() {
 
   return (
     <Router>
-      <div className="container" style={{minHeight:'80vh'}}>
+      <div className="container" style={{ minHeight: '80vh' }}>
         <Navbar onSignOut={handleSignOut} />
         <br />
         <Routes>
@@ -50,8 +53,8 @@ function App() {
           <Route path="/terms-of-service" element={<TermsOfService />} />
         </Routes>
       </div>
-  <Footer />
-  <Chatbot />
+      <Footer />
+      <Chatbot />
     </Router>
   );
 }
